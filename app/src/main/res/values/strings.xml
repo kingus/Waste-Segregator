@@ -1,7 +1,9 @@
 <resources>
-    <string name="app_name">Waste-Segregator</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="app_name">WasteAway!</string>
     <string name="enter_product_name">Podaj nazwę produktu</string>
     <string name="lorem_ipsum">Lorem ipsum</string>
+    <string name="scan_button">Skanuj</string>
+    <string name="search_button">Wyszukaj</string>
+    <string name="scan_product_button">Zeskanuj produkt</string>
+    <string name="scan_product_label">Zeskanuj swój produkt</string>
 </resources>

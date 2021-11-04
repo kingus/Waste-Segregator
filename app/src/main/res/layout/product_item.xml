@@ -4,24 +4,44 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="24dp">
+    android:layout_margin="@dimen/standard_margin_0.5x"
+    android:background="@drawable/rounded_layout"
+    android:elevation="@dimen/standard_elevation"
+    android:padding="@dimen/standard_margin_3x">
+
+    <ImageView
+        android:id="@+id/binImageView"
+        android:layout_width="@dimen/small_icon_size"
+        android:layout_height="@dimen/small_icon_size"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/recycling_bin_green" />
 
     <TextView
         android:id="@+id/productTextView"
-        android:layout_width="match_parent"
+        style="@style/BoldTextViewStyle"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        tools:text="@string/lorem_ipsum"
-        android:textStyle="bold"
+        android:layout_marginStart="@dimen/standard_margin_3x"
+        android:layout_marginBottom="@dimen/standard_margin_0.5x"
+        app:layout_constraintBottom_toTopOf="@+id/wasteTypeTextView"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toEndOf="@+id/binImageView"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="@string/lorem_ipsum" />
+
 
     <TextView
         android:id="@+id/wasteTypeTextView"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        tools:text="@string/lorem_ipsum"
+        android:layout_marginStart="@dimen/standard_margin_3x"
+        android:fontFamily="@font/open_sans_regular"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/productTextView" />
+        app:layout_constraintStart_toEndOf="@+id/binImageView"
+        tools:text="@string/lorem_ipsum" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

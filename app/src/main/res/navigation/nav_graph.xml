@@ -10,5 +10,10 @@
         android:name="com.example.waste_segregator.ui.SearchFragment"
         android:label="fragment_search"
         tools:layout="@layout/fragment_search" />
+    <fragment
+        android:id="@+id/scanBarcodeFragment"
+        android:name="com.example.waste_segregator.ui.ScanBarcodeFragment"
+        android:label="fragment_scan_barcode"
+        tools:layout="@layout/fragment_scan_barcode" />
 
 </navigation>

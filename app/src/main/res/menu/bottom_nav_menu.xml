@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/searchFragment"
+        android:icon="@drawable/ic_search"
+        android:title="@string/search_button" />
+    <item
+        android:id="@+id/scanBarcodeFragment"
+        android:icon="@drawable/ic_qr_code_scanner"
+        android:title="@string/scan_button" />
+</menu>
