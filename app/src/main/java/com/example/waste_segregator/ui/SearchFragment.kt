@@ -19,11 +19,11 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class SearchFragment : Fragment(), LifecycleOwner {
+
     private val TAG = SearchFragment::class.qualifiedName
 
     private lateinit var binding: FragmentSearchBinding
     private val viewModel: WastesViewModel by viewModels()
-
 
 
     private val adapter: ProductAdapter by lazy {
@@ -49,7 +49,8 @@ class SearchFragment : Fragment(), LifecycleOwner {
             if (response.isSuccessful) {
                 Log.d(TAG, "Products have been loaded")
                 response.body()?.result?.records?.forEach {
-                    val product = Product(it.Nazwa!!, it.Typ!!)
+                    val synonyms = it.Synonim?.split(", '")
+                    val product = Product(it.Nazwa!!, it.Typ!!, synonyms)
                     productsList.add(product)
                 }
             } else {
@@ -69,10 +70,16 @@ class SearchFragment : Fragment(), LifecycleOwner {
             }
 
             override fun afterTextChanged(s: Editable?) {
-                val filteredProductList = productsList.filter { prod ->
-                    s.toString() != "" && prod.product.uppercase()
-                        .contains(s.toString().uppercase())
+
+                val filteredProductList = productsList.filter { product ->
+                    product.synonyms!!.any { synonym ->
+                        s.toString() != "" &&
+                                synonym.uppercase().contains(s.toString().uppercase())
+                                || s.toString() != "" && product.product.uppercase()
+                            .contains(s.toString().uppercase())
+                    }
                 }
+
                 adapter.setData(filteredProductList)
                 Log.d("Filtered products", filteredProductList.toString())
             }
@@ -80,7 +87,7 @@ class SearchFragment : Fragment(), LifecycleOwner {
 
     }
 
-    fun setupRecyclerView() {
+    private fun setupRecyclerView() {
         binding.productsRecyclerView.adapter = adapter
         binding.productsRecyclerView.layoutManager = LinearLayoutManager(context)
     }

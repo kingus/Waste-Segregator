@@ -14,8 +14,8 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class ScanBarcodeFragment : Fragment() {
-    private lateinit var binding: FragmentScanBarcodeBinding
 
+    private lateinit var binding: FragmentScanBarcodeBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
