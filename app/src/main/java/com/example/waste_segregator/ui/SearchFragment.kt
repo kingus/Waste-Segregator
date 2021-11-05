@@ -8,17 +8,23 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.waste_segregator.ui.adapter.ProductAdapter
 import com.example.waste_segregator.databinding.FragmentSearchBinding
 import com.example.waste_segregator.models.Product
-import com.example.waste_segregator.repository.WastesRepository
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
+import com.example.waste_segregator.ui.viewmodel.WastesViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
-class SearchFragment : Fragment() {
+@AndroidEntryPoint
+class SearchFragment : Fragment(), LifecycleOwner {
+    private val TAG = SearchFragment::class.qualifiedName
+
     private lateinit var binding: FragmentSearchBinding
-    private lateinit var repository: WastesRepository
+    private val viewModel: WastesViewModel by viewModels()
+
+
 
     private val adapter: ProductAdapter by lazy {
         ProductAdapter()
@@ -35,17 +41,21 @@ class SearchFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupRecyclerView()
-        repository = WastesRepository()
         val productsList = mutableListOf<Product>()
 
-        GlobalScope.launch {
-            val response = repository.getWastes(1000)
-            response.body()?.result?.records?.forEach {
-                val product = Product(it.Nazwa!!, it.Typ!!)
-                productsList.add(product)
-            }
-        }
+        viewModel.getWastes(1000)
 
+        viewModel.products.observe(viewLifecycleOwner, { response ->
+            if (response.isSuccessful) {
+                Log.d(TAG, "Products have been loaded")
+                response.body()?.result?.records?.forEach {
+                    val product = Product(it.Nazwa!!, it.Typ!!)
+                    productsList.add(product)
+                }
+            } else {
+                Log.d(TAG, "Can't retrieve products info.")
+            }
+        })
 
         binding.enteredProductEditText.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
@@ -59,13 +69,12 @@ class SearchFragment : Fragment() {
             }
 
             override fun afterTextChanged(s: Editable?) {
-                Log.d("Entered product", s.toString())
                 val filteredProductList = productsList.filter { prod ->
                     s.toString() != "" && prod.product.uppercase()
                         .contains(s.toString().uppercase())
                 }
-                Log.d("Filtered products", filteredProductList.toString())
                 adapter.setData(filteredProductList)
+                Log.d("Filtered products", filteredProductList.toString())
             }
         })
 

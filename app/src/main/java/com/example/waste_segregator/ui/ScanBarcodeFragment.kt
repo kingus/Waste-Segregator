@@ -10,8 +10,9 @@ import android.widget.Toast
 import com.journeyapps.barcodescanner.ScanContract
 import com.example.waste_segregator.databinding.FragmentScanBarcodeBinding
 import com.journeyapps.barcodescanner.ScanIntentResult
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class ScanBarcodeFragment : Fragment() {
     private lateinit var binding: FragmentScanBarcodeBinding
 

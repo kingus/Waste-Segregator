@@ -13,6 +13,7 @@
         android:layout_margin="@dimen/standard_margin_2x"
         android:background="@drawable/rounded_layout"
         android:drawableStart="@drawable/ic_search"
+        android:drawablePadding="@dimen/standard_margin_2x"
         android:drawableTint="@color/juicy_green"
         android:hint="@string/enter_product_name"
         android:inputType="textPersonName"
